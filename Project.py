@@ -45,6 +45,11 @@ countries = [("Afghanistan","Afghanistan"),("Albania","Albania"),("Algeria","Alg
 		,("Turkey","Turkey"),("Turkmenistan","Turkmenistan"),("Uganda","Uganda"),("Ukraine","Ukraine"),("United Arab Emirates","United Arab Emirates"),("United Kingdom","United Kingdom"),("United States","United States"),("Uruguay","Uruguay"),("Uzbekistan","Uzbekistan"),("Venezuela","Venezuela"),("Vietnam","Vietnam"),("Virgin Islands (US)","Virgin Islands (US)")
 		,("Yemen","Yemen"),("Zambia","Zambia"),("Zimbabwe","Zimbabwe")]
 
+class accountsettings(Form):
+    username = StringField("Username : ", [validators.DataRequired("Please enter your username!")])
+    password = PasswordField("Password : ", [validators.DataRequired("Please enter your password!")])
+    submit = SubmitField("Submit")
+
 class login_form(Form):
     username = StringField("Username : ",[validators.DataRequired("Please enter your username!")])
     password = PasswordField("Password : ",[validators.DataRequired("Please enter your password!")])
@@ -184,6 +189,7 @@ def login_register():
             'bio' : data.get_bio(),
             "status" : "user"
         })
+
         return redirect(url_for("login"))
 
 @app.route("/login_register_employer", methods=["POST","GET"])
@@ -251,15 +257,19 @@ def home() :
         return render_template('home.html')
 
 #Route to messenger
-@app.route( '/messages' )
+@app.route('/messages')
 def hello():
   return render_template( 'ChatApp.html' )
 
-def messageRecived():
+def messageReceived():
   print( 'message was received!!!' )
 
-@app.route('/account/<string:id>', methods=["GET","POST"])
-def accountsettings(id) :
+@app.route('/accountsettings')
+def accountsettings() :
+    return render_template('AccountSettings.html')
+
+@app.route('/update/<string:id>', methods = ['POST', "GET"])
+def update(id) :
     form = register_form(request.form)
     if request.method == "POST" and form.validate():
         username = form.username.data
@@ -275,27 +285,23 @@ def accountsettings(id) :
         awards = form.awards.data
         bio = form.bio.data
 
+        setting = RegisterForm(username, password, email, firstname, lastname, age, country, highestqualification,
+                               workexperiences, skillsets, awards, bio)
 
-        setting = RegisterForm(username, password, email, firstname, lastname, age, country, highestqualification, workexperiences, skillsets, awards, bio)
-
-        setting_db = root.child('userdata/' + id )
+        setting_db = root.child('userdata/' + id)
         setting_db.push({
-            'username' : setting.get_username(),
-            'password' : setting.get_password(),
-            'firstname' : setting.get_firstname(),
-            'lastname' : setting.get_lastname(),
-            'age' : setting.get_age(),
-            'country' : setting.get_country(),
-            'highestqualification' : setting.get_highestqualification(),
-            'workexperiences' : setting.get_workexperiences(),
-            'skillsets' : setting.get_skillsets(),
-            'awards' : setting.get_awards(),
-            'bio' : setting.get_bio()
+            'username': setting.get_username(),
+            'password': setting.get_password(),
+            'firstname': setting.get_firstname(),
+            'lastname': setting.get_lastname(),
+            'age': setting.get_age(),
+            'country': setting.get_country(),
+            'highestqualification': setting.get_highestqualification(),
+            'workexperiences': setting.get_workexperiences(),
+            'skillsets': setting.get_skillsets(),
+            'awards': setting.get_awards(),
+            'bio': setting.get_bio()
         })
-        flash('UPDATED', 'success')
-
-
-    return render_template('AccountSettings.html')
 
 @app.route('/help')
 def help() :
@@ -326,7 +332,6 @@ def loadtemplate(name) :
 
 @app.route('/editor')
 def editor() :
-    print(session['template'])
     return render_template('editor.html')
 
 @app.route('/savetemplate')
@@ -341,7 +346,7 @@ def savetemplate() :
 @socketio.on( 'my event' )
 def handle_my_custom_event( json ):
   print( 'recived my event: ' + str( json ) )
-  socketio.emit( 'my response', json, callback=messageRecived )
+  socketio.emit( 'my response', json, callback=messageReceived )
 
 
 if __name__ == '__main__':
