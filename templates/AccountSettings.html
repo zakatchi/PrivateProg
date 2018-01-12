@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicons -->
+    <link href="../static/images/MyPortfolioLogo.png" rel="icon">
+    <link href="../static/images/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700"
+          rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="../static/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="../static/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../static/css/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="../static/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+<form method="POST" action="accountsettings">
+
+<div class='form-group'>
+    <div class="form-row">
+        {{ render_field(form.username, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{  render_field(form.password, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.email, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.firstname, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.lastname, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.age, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.country, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.highestqualification, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.workexperiences, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.skillsets, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.awards, class="wow fadeInUp") }}
+    </div>
+
+    <div class="form-row">
+        {{ render_field(form.bio, class="wow fadeInUp") }}
+    </div>
+</div>
+
+    <div class="form-group">
+            <div class="form-row">
+                <div class="form-group col-md-11">
+                </div>
+                <div class="form-group col-md-1">
+                    <input type="submit" value="Update" class="btn btn-info"/>
+                </div>
+            </div>
+        </div>
+
+</form>
+
+
+
+<script src="../static/js/jquery/jquery.min.js"></script>
+<script src="../static/js/jquery/jquery-migrate.min.js"></script>
+<script src="../static/js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="../static/js/easing/easing.min.js"></script>
+<script src="../static/js/wow/wow.min.js"></script>
+
+<script src="../static/js/waypoints/waypoints.min.js"></script>
+<script src="../static/js/counterup/counterup.min.js"></script>
+<script src="../static/js/superfish/hoverIntent.js"></script>
+<script src="../static/js/superfish/superfish.min.js"></script>
+
+<!-- Contact Form JavaScript File -->
+<script src="../static/js/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="../static/js/main.js"></script>
+
+
+</body>
+</html>

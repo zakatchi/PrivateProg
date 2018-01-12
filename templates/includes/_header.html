@@ -1,0 +1,34 @@
+<!--==========================
+Header
+============================-->
+<header id="header">
+    <div class="container">
+
+        <div id="logo" class="pull-left">
+            <!--<a href="#hero"><img src="../static/images/MyPortfolio_Logo_title.png" alt="" title="" /></a>
+            <!-- Uncomment below if you prefer to use a text logo -->
+            <h1><a href="/home">MyPortFolio</a></h1>
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                {% if session['loggedin'] == True %}
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/messages">Messages</a></li>
+                    <li><a href="#portfolio">No New Notifications</a></li>
+                    <li><a href="{{ url_for('help') }}">FAQ</a></li>
+                    <li class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><a href="#">{{ session['data']['username'] }}</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li class="dropdown-item" style="font-size: 18px;">Logged in as a {{ session['data']['status'] }}</li>
+                        <li class="dropdown-item"><a href = "{{ url_for('accountsettings') }}" >Account Settings</a></li>
+                        <li class="dropdown-item"><a href="{{ url_for('logout') }}">Logout</a></li>
+                    </ul>
+                {% else %}
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#team">About Us</a></li>
+                    <li><a href="{{ url_for('main') }}">Sign In or Register</a></li>
+                {% endif %}
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
