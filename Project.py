@@ -48,6 +48,17 @@ countries = [("Afghanistan","Afghanistan"),("Albania","Albania"),("Algeria","Alg
 class accountsettings(Form):
     username = StringField("Username : ", [validators.DataRequired("Please enter your username!")])
     password = PasswordField("Password : ", [validators.DataRequired("Please enter your password!")])
+    email = StringField("Email : ", [validators.DataRequired("Please enter your email!")])
+    firstname = StringField("First Name : ", [validators.DataRequired("Please enter your First Name!")])
+    lastname = StringField("Last Name : ", [validators.DataRequired("Please enter your Last Name")])
+    age = IntegerField("Age : ", [validators.DataRequired("Please enter your age!")])
+    country = SelectField(u"Country : ", choices=countries)
+    highestqualification = StringField("Highest Qualification : ", [validators.DataRequired("Please enter your highest qualifications!")])
+    workexperiences = StringField("Work Experiences : ", [validators.DataRequired("Please enter your work experiences!")])
+    skillsets = StringField("Skillsets : ", [validators.DataRequired("Please enter your skillsets!")])
+    awards = StringField("Awards : ", [validators.DataRequired("Please enter what awards you have received!")])
+    bio = TextAreaField("Biography(Less than 500 words) : ")
+
     submit = SubmitField("Submit")
 
 class login_form(Form):
@@ -270,7 +281,7 @@ def accountsettings() :
 
 @app.route('/update/<string:id>', methods = ['POST', "GET"])
 def update(id) :
-    form = register_form(request.form)
+    form = accountsettings(request.form)
     if request.method == "POST" and form.validate():
         username = form.username.data
         password = form.password.data
