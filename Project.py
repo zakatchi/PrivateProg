@@ -45,14 +45,14 @@ countries = [("Afghanistan","Afghanistan"),("Albania","Albania"),("Algeria","Alg
 		,("Turkey","Turkey"),("Turkmenistan","Turkmenistan"),("Uganda","Uganda"),("Ukraine","Ukraine"),("United Arab Emirates","United Arab Emirates"),("United Kingdom","United Kingdom"),("United States","United States"),("Uruguay","Uruguay"),("Uzbekistan","Uzbekistan"),("Venezuela","Venezuela"),("Vietnam","Vietnam"),("Virgin Islands (US)","Virgin Islands (US)")
 		,("Yemen","Yemen"),("Zambia","Zambia"),("Zimbabwe","Zimbabwe")]
 
-class accountsettings(Form):
+class accountsettingsform(Form):
     username = StringField("Username : ", [validators.DataRequired("Please enter your username!")])
     password = PasswordField("Password : ", [validators.DataRequired("Please enter your password!")])
     email = StringField("Email : ", [validators.DataRequired("Please enter your email!")])
     firstname = StringField("First Name : ", [validators.DataRequired("Please enter your First Name!")])
     lastname = StringField("Last Name : ", [validators.DataRequired("Please enter your Last Name")])
     age = IntegerField("Age : ", [validators.DataRequired("Please enter your age!")])
-    country = SelectField(u"Country : ", choices=countries)
+    country = SelectField("Country : ", choices=countries)
     highestqualification = StringField("Highest Qualification : ", [validators.DataRequired("Please enter your highest qualifications!")])
     workexperiences = StringField("Work Experiences : ", [validators.DataRequired("Please enter your work experiences!")])
     skillsets = StringField("Skillsets : ", [validators.DataRequired("Please enter your skillsets!")])
@@ -275,13 +275,14 @@ def hello():
 def messageReceived():
   print( 'message was received!!!' )
 
-@app.route('/accountsettings')
+@app.route('/accountsettings', methods=['GET', 'POST'])
 def accountsettings() :
-    return render_template('AccountSettings.html')
-
-@app.route('/update/<string:id>', methods = ['POST', "GET"])
-def update(id) :
-    form = accountsettings(request.form)
+    id = ""
+    datab = root.child("userdata").get()
+    for i in datab:
+        if datab[i]["username"] == session["data"]["username"]:
+            id = i
+    form = accountsettingsform(request.form)
     if request.method == "POST" and form.validate():
         username = form.username.data
         password = form.password.data
@@ -300,9 +301,10 @@ def update(id) :
                                workexperiences, skillsets, awards, bio)
 
         setting_db = root.child('userdata/' + id)
-        setting_db.push({
+        setting_db.update({
             'username': setting.get_username(),
             'password': setting.get_password(),
+            'email' : setting.get_email(),
             'firstname': setting.get_firstname(),
             'lastname': setting.get_lastname(),
             'age': setting.get_age(),
@@ -313,6 +315,13 @@ def update(id) :
             'awards': setting.get_awards(),
             'bio': setting.get_bio()
         })
+
+    return render_template('accountsettings.html', form=form)
+
+@app.route('/accountsettings1', methods = ["GET"])
+def update(id) :
+    form = accountsettings(request.form)
+
 
 @app.route('/help')
 def help() :
