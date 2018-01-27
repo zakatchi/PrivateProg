@@ -1,1 +1,1 @@
-web: gunicorn privateprog:app
+web: gunicorn Privateprog:app
