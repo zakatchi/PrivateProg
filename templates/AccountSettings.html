@@ -8,6 +8,10 @@
     <section id="facts">
     <form action="accountsettings" method="post">
 
+         <div class="container">
+            <H3> Hello {{ session["data"]["username"] }}!</H3>
+        </div>
+    <br>
 
         <div class="container">
             <div class="row">
@@ -16,7 +20,17 @@
             </div>
 
             <div class="row">
+                <div class="col-md-3 col-xs-6">
+
+
+                    {{ form.otp(class="form-control wow fadeInUp ", placeholder="One-Time Pass") }}
+                    {% for message in form.username.errors %}
+                        <h6 style="color:red">{{ message }}</h6>
+                    {% endfor %}
+                    <br>
+                </div>
                 <div class="col-md-6 col-xs-12">
+
 
                     {{ form.username(class="form-control wow fadeInUp ", placeholder="Username") }}
                     {% for message in form.username.errors %}
@@ -24,7 +38,7 @@
                     {% endfor %}
                     <br>
                 </div>
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-3 col-xs-6">
 
                     {{ form.password(class="form-control wow fadeInUp", placeholder="Password") }}
                     {% for message in form.password.errors %}
